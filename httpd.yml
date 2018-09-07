@@ -1,0 +1,18 @@
+# Ansible_Repo
+---
+hosts: web
+gather_facts: false
+become: yes
+become_method: sudo
+tasks: 
+ - name: install httpd package
+   yum: name= httpd state= present
+ - name: start httpd service
+   service: name=httpd state=started
+ - name: copy index.html file to destination
+   copy: src=/opt/ansible/index.html dest=/opt/ansible/index.html
+ - name: set iptable rules
+   command: iptables -I INPUT 1 -p tcp --dport http -j ACCEPT -m --comment "Apache running on port 80"
+ - name: save iptables
+   command: iptables-save
+ 
