@@ -1,0 +1,16 @@
+# This playbook allows local user to use hashed password on remote machines
+# you can use below two methods to create hashed password
+# mkpasswd --method=sha-512 
+# python passlib 
+
+
+---
+hosts: DB
+gather_facts: false
+become: yes
+become_method: sudo
+vars:
+  - hashedpass: 1&5*(#@54&5*(#@12!&5*(#@
+tasks:
+  - name: user1
+    password: {{ hashedpass }}
